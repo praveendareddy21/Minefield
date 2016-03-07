@@ -44,6 +44,23 @@ FieldType Field::get(int x, int y)
  		return _map[x][y];
 }
 
+void Field::reveal(int x, int y)
+{
+  FieldType ftype;
+	if(x < 0 || x >= FIELD_DIMENSION || y < 0 || y >= FIELD_DIMENSION)
+ 	{
+ 		throw "Out of bounds";
+ 	}
+ 	else
+ 		 ftype=get(x,y);
+    if(ftype==EMPTY_HIDDEN){
+      _map[x][y]=EMPTY_SHOWN;
+    }
+    if(ftype==MINE_HIDDEN){
+      _map[x][y]=MINE_SHOWN;
+    }
+}
+
 /**
  * Returns whether or not _map at (x,y) has a mine and throws an
  * exception if the location is illegal
@@ -51,15 +68,36 @@ FieldType Field::get(int x, int y)
  bool Field::isSafe(int x, int y)
  {
  	//TODO: Complete this function, isSafe(int,int)
- 	return true;
+  try{
+
+    FieldType ftype=get(x,y);
+    if(ftype==EMPTY_SHOWN || ftype==EMPTY_HIDDEN){
+      return true;
+    }
+
+  }
+  catch(const char * exp){
+    throw exp;
+
+  }
+ 	return false;
  }
 
 /**
- * Changes the location from EMPTY_HIDDEN to EMPTY_SHOWN for the 
+ * Changes the location from EMPTY_HIDDEN to EMPTY_SHOWN for the
  * location and any valid locations adjacent (immediately above,
  * below, left, or right as printed) to the provided (x,y) location
 **/
 void Field::revealAdjacent(int x, int y)
 {
 	//TODO: Complete this function, revealAdjacent(int,int)
+
+  reveal(x,y);
+  reveal(x+1,y);
+  reveal(x,y+1);
+  reveal(x-1,y);
+  reveal(x,y-1);
+
+
+
 }

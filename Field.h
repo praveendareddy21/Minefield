@@ -23,11 +23,12 @@ class Field
 		FieldType get(int,int);
 		void revealAdjacent(int, int);
 		void placeMine(int, int);
-		
+
 
 	private:
 		static const int FIELD_DIMENSION = 10;
-		std::vector< std::vector<FieldType> > _map;	
+		std::vector< std::vector<FieldType> > _map;
+		void reveal(int, int);
 };
 
 #endif //FIELD_H
